@@ -1,0 +1,655 @@
+﻿<!DOCTYPE HTML>
+<html>
+
+<head>
+  <meta charset="UTF-8">
+  <title>基于飞桨的中文多领域任务型对话系统</title>
+  <meta name="keywords" content="任务型,对话系统,飞桨,paddle,paddlepaddle" />
+  <meta name="description" content="" />
+  <meta name="renderer" content="webkit">
+  <meta content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no"
+    name="viewport">
+  <meta content="telephone=no, address=no" name="format-detection">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta http-equiv="Expires" content="0">
+  <meta http-equiv="Pragma" content="no-cache">
+  <meta http-equiv="Cache-control" content="no-cache">
+  <meta http-equiv="Cache" content="no-cache">
+  <link href="css/bootstrap.min.css" rel="stylesheet">
+
+  <!-- MetisMenu CSS -->
+  <link href="css/metismenu.min.css" rel="stylesheet">
+
+  <!-- Custom CSS -->
+  <link href="css/sb-admin-2.css" rel="stylesheet">
+
+
+  <!-- Custom Fonts -->
+  <link href="css/font-awesome.min.css" rel="stylesheet" type="text/css">
+
+  <link href="css/datetimepicker.css" rel="stylesheet" type="text/css">
+  <link href="css/datetimepicker_blue.css" rel="stylesheet" type="text/css">
+  <link href="css/dropdown.css" rel="stylesheet" type="text/css">
+
+  <link rel="stylesheet" type="text/css" href="css/common.css">
+  <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+  <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+  <!--[if lt IE 9]>
+<script src="js/html5shiv.js"></script>
+<script src="js/respond.min.js"></script>
+<![endif]-->
+
+  <!-- jQuery -->
+  <script src="js/jquery-1.10.2.min.js"></script>
+  <script>
+    var is_check_brower = true;
+    var is_mobile = '';
+    var image_type = 0;
+  </script>
+
+  <!-- Bootstrap Core JavaScript -->
+  <script src="js/bootstrap.min.js"></script>
+  <!-- Metis Menu Plugin JavaScript -->
+  <script src="js/metismenu.min.js"></script>
+  <!-- Custom Theme JavaScript -->
+  <script type="text/javascript" src="js/bootstrap-datetimepicker.min.js"></script>
+  <script type="text/javascript" src="js/bootstrap-datetimepicker.zh-cn.js" charset="UTF-8"></script>
+  <script src="js/jquery.sglide.js"></script>
+  <script src="js/sb-admin-2.js"></script>
+  <script type="text/javascript" src="js/html2canvas.min.js"></script>
+  <script type="text/javascript" src="js/emoji.js"></script>
+  <script type="text/javascript" src="js/functions.js"></script>
+  <script type="text/javascript" src="js/common.js"></script>
+  <script src="js/bootbox.min.js"></script>
+  <link rel="stylesheet" type="text/css" href="css/m.css">
+  <script>
+    $(function () {
+      $('#btn-menu').click(function () {
+        $('.sidebar-nav').toggle();
+      });
+    });
+  </script>
+  <link rel="stylesheet" type="text/css" href="css/wx2019.css">
+  <style>
+    .modal-dialog {
+      z-index: 2048;
+    }
+
+    #bglist li {
+      list-style: none;
+      float: left;
+      margin: 5px;
+    }
+
+    #bglist li img {
+      height: 200px;
+    }
+  </style>
+</head>
+
+<body>
+
+  <div id="wrapper">
+    <!-- Navigation -->
+    <nav class="navbar navbar-default navbar-static-top" role="navigation" style="margin-bottom: 0">
+      <!-- 头部 -->
+     
+      <!-- /.navbar-header -->
+
+      <ul class="nav navbar-top-links navbar-right">
+
+       
+      </ul>
+    
+    </nav>
+
+    <!-- 主体 -->
+    <div id="page-wrapper" style="padding-right: 15%">
+      <div class="row">
+        <div class="col-lg-12">
+          <h3 class="page-header">基于飞桨的中文多领域任务型对话系统</h3>
+        </div>
+      </div>
+
+      <div class="row" style="position:relative;padding: 0 15px;">
+        <div class="panel-body panel-wx-tab">
+          <!-- Nav tabs -->
+        
+          <!-- Tab panes -->
+          <div >
+            <div class="tab-pane" id="w2">
+              <div class="setting">
+                <!-- 这里是用户的内容输入入口 -->
+                <div class="users">
+                  <!-- <div class="add-user">
+                    <div class="a-u-pic">
+                      <div class="a-u-pic-show"><input type="file" accept="image/jpeg,image/x-png"></div>
+                    </div>
+                    <div class="a-u-name">
+                      <p><span>用户名：</span><input class="a-u-data-name" type="text" value=""></p>
+                      <p><span>聊天内容：</span><textarea class="a-u-content1602038909210"></textarea><a
+                          class="a-u-face btn-add-face" data-input="a-u-content1602038909210" href="#">表情</a></p>
+                      <p><input style="margin-right:5px;" class="btn-rand-username" type="button" value="随机用户名"><input
+                          class="btn-rand-face" type="button" value="随机头像"></p>
+                    </div>
+                    <div class="a-u-dialog" style="clear:both;"><a class="btn btn-primary" data-type="left"
+                        href="#">发送</a></div>
+                  </div> -->
+
+                  <div class="add-user">
+                    <div class="dropdown">
+                      <span><b>意图识别结果</b></span>&nbsp;
+                    </div>
+
+                    <textarea id="data1" rows="7" cols="50">
+                    </textarea>
+                    <!-- <button type="button" class="btn btn-success">Recall NLU</button> -->
+                    <br><br>
+
+                    <div class="dropdown">
+                      <span><b>酒店设施要求识别结果</b></span>&nbsp;
+                    </div>
+                    <textarea id="data2" rows="7" cols="50">
+                    </textarea>
+
+
+                    <br><br>
+                    <div class="dropdown">
+                      <span><b>NER识别结果</b></span>&nbsp;
+                    </div>
+                    <textarea id="data3" rows="7" cols="50">
+                    </textarea>
+
+
+
+                    <br><br>
+                    <div class="dropdown">
+                      <span><b>DST识别结果</b></span>&nbsp;
+                    </div>
+                    <textarea id="data4" rows="7" cols="50">
+                    </textarea>
+
+              
+
+                  </div>
+
+                
+                </div>
+               
+              </div>
+            </div>
+
+            
+          </div>
+        </div>
+       
+        <div class="phone-wrap" style="width: 1100px;">
+          <div id="iphone" class="iphone iphone-preview" style="width: 1100px;">
+            <div class="i-body" id='ibody'>
+            </div>
+            <div class="i-bottom">
+              <div class="add-user">
+                <div class="row">
+                  <div class="a-u-name">
+                    <div class="row">
+                      <div class="form-inline" style="height: 300px;">
+                          <input id="mycontent" type="text" class="form-control" style="width:850px;height:100px;font-size:30pt" placeholder="please input your content" />
+                          <button onclick="submit_content()" class="btn btn-primary" style="height:100px;font-size:30pt" >send</button>
+                          <button id="clear_content" onclick="clear_content()" class="btn btn-primary" style="height:100px;font-size:30pt" >clear</button>
+                      </div>
+                    </div>
+                    </div>
+                  </div>
+                 
+                </div>
+
+              </div>
+            </div>
+
+          </div>
+        </div>
+      </div>
+
+      <div class="emojiPanel" id="emojiPanel">
+        <ul class="faceTab">
+          <li><a class="chooseFaceTab" href="javascript:;">QQ表情</a></li>
+          <!--<li><a href="javascript:;">符号表情</a></li>
+        <li><a href="javascript:;">动画表情</a></li>-->
+        </ul>
+        <div class="faceWrap" style="zoom:1;outline:none;">
+          <div class="faceBox emojiArea"></div>
+        </div>
+      </div>
+
+      <script type="text/javascript">
+        set_water();
+        setInterval(function () {
+          set_water();
+        }, 2000);
+        //消息数目
+        var i_n_count = randomString(1);
+        if (i_n_count > 0) {
+          $('.input-i-n-count').val(i_n_count);
+          $('.i-n-count').text(i_n_count);
+        }
+        $('.input-i-n-count').bind('input propertychange', function () {
+          var val = $(this).val();
+          if (isNaN(val) || val == 0) {
+            $('.i-n-count').text('');
+            return false;
+          }
+          val = $(this).val();
+          $('.i-n-count').text(val);
+        });
+        $('.btn-del-i-n-count').click(function () {
+          $('.i-n-count').text('');
+          $('.input-i-n-count').val('');
+          return false;
+        });
+ 
+
+        // 清除面板然后发送重置指令
+        function clear_content() {
+          // 清除输入框
+          document.getElementById("mycontent").value="";
+          // 清除面板
+          document.getElementById("ibody").innerHTML="";
+          // 重置对话状态
+          setTimeout(function() {
+            // 对机器人的消息进行控制
+            // 发送ajax请求
+            var rec_class = 'i-b-rec-text';
+            var sendmsg = {
+              "content" : "clear"
+            }
+            console.log(JSON.stringify(sendmsg))
+
+            var resp,data1,data2,data3,data4= ""
+            $.ajax({
+              url: "http://10.1.18.195:5000/sendmsg",
+              type: "POST",
+              data: sendmsg,
+              dataType: "json",
+              async: false,
+              success: function (result) {
+                console.log(result)
+                resp = result.data.resp
+                data1 = result.data.data1
+                data2 = result.data.data2
+                data3 = result.data.data3
+                data4 = result.data.data4
+              }
+            });
+            var dialog = $('<div class="' + rec_class + '"><div>' + '<span><i></i><em>' + resp + '</em></span></div></div>');
+            img = '<img src="images/robot.jpg" />';
+            dialog.prepend(img);
+            // 这里开始输入用户内容
+            $('.i-body').append(dialog);
+            $(".radio-i-b-nick:checked").click();
+            // 获取模型返回的配置信息
+            $("#data1").text(data1)
+            $("#data2").text(data2)
+            $("#data3").text(data3)
+            $("#data4").text(data4)
+
+          },1000)
+          
+        }
+
+
+
+
+
+        function submit_content(){
+          var img = '<img src="images/face/10.jpg" />';
+          var content = $('#mycontent').val()
+          var name = "me"
+
+          var msg_class = 'i-b-sen-text';
+          var rec_class = 'i-b-rec-text';
+
+
+          var dialog = $('<div class="' + msg_class + '"><div><span><i></i><em>' + content + '</em></span></div></div>');
+          dialog.prepend(img);
+          // 这里开始输入用户内容
+
+          console.log(dialog)
+          $('.i-body').append(dialog);
+          $(".radio-i-b-nick:checked").click();
+         
+          // todo 从这里添加机器人的对话 机器人要单独设计一个隐藏输入框
+          setTimeout(function() {
+            // 对机器人的消息进行控制
+            // 发送ajax请求
+            var sendmsg = {
+              "content" : content
+            }
+            console.log(JSON.stringify(sendmsg))
+
+            var resp,data1,data2,data3,data4= ""
+            $.ajax({
+              url: "http://10.1.18.195:5000/sendmsg",
+              type: "POST",
+              data: sendmsg,
+              dataType: "json",
+              async: false,
+              success: function (result) {
+                console.log(result)
+                resp = result.data.resp
+                data1 = result.data.data1
+                data2 = result.data.data2
+                data3 = result.data.data3
+                data4 = result.data.data4
+              }
+            });
+            var dialog = $('<div class="' + rec_class + '"><div>' + '<span><i></i><em>' + resp + '</em></span></div></div>');
+            img = '<img src="images/robot.jpg" />';
+            dialog.prepend(img);
+            // 这里开始输入用户内容
+            $('.i-body').append(dialog);
+            $(".radio-i-b-nick:checked").click();
+            // 获取模型返回的配置信息
+            $("#data1").text(data1)
+            $("#data2").text(data2)
+            $("#data3").text(data3)
+            $("#data4").text(data4)
+
+          },1000)
+          //显示名称
+          return false;
+        }
+
+      
+
+        $('.add-time-btn').click(function () {
+          var year = $('.slt-year option:selected').val();
+          var month = $('.slt-month option:selected').val();
+          var day = $('.slt-day option:selected').val();
+          var xinqi = $('.slt-xinqi option:selected').val();
+          var shi = $('.slt-shi option:selected').val();
+          var hour = $('.slt-hour option:selected').val();
+          var minite = $('.slt-minite option:selected').val();
+          var str = '';
+          if (year != '-')
+            str += year + '年';
+          if (month != '-')
+            str += month + '月';
+          if (day != '-')
+            str += day + '日 ';
+          if (xinqi != '-')
+            str += xinqi + ' ';
+          if (shi != '-')
+            str += shi;
+          str += hour + ':';
+          str += minite;
+          var html = '<div class="i-b-time"><span>' + str + '</span><a class="msg-del"></a></div>';
+          $('.i-body').append(html);
+          return false;
+        });
+
+        var set_body_bg = function () {
+          var img = $('.a-u-pic-bodybg img');
+          var src = img.attr('src');
+          $('.i-body').css('background-image', 'url(' + src + ')');
+
+        }
+
+
+        $('body').on('change', '.a-u-pic-show input', function () {
+          var img = document.createElement('img');//创建 img 对象
+          var _this = $(this);
+          var callback = _this.attr('data-callback');
+
+          window.URL = window.URL || window.webkitURL;
+
+          var imgFile = $(this).get(0);
+
+          if (window.URL && imgFile.files[0]) {
+            var reader = new FileReader();
+            reader.readAsDataURL(imgFile.files[0]);
+            reader.onload = function (e) {
+              var img = '<img src="' + this.result + '" alt=""/>';
+              _this.parent().find('img').remove();
+              _this.parent().append(img);
+
+              if (callback) {
+                eval(callback + '()');
+              }
+            }
+          }
+        });
+
+        //图片对话上传图片
+        $('body').on('change', '.a-u-pic-show-pic input', function () {
+          var img = document.createElement('img');//创建 img 对象
+          var _this = $(this);
+          var callback = _this.attr('data-callback');
+
+          window.URL = window.URL || window.webkitURL;
+
+          var imgFile = $(this).get(0);
+
+          if (window.URL && imgFile.files[0]) {
+            var reader = new FileReader();
+            reader.readAsDataURL(imgFile.files[0]);
+            reader.onload = function (e) {
+              var img = '<img src="' + this.result + '" alt=""/>';
+              //console.log($(img));console.log($($(img)[0]));console.log($($(img)[0]).width());alert($(img)[0].width+"==bbb");
+              var img1 = document.createElement('img');//创建 img 对象
+              $(img1).attr("src", this.result).load(function () {
+                $(img1).attr("data-width", this.width).attr("data-height", this.height);
+                _this.parent().find('img').remove();
+                _this.parent().append(img1);
+              });
+              //_this.parent().find('img').remove();
+              //_this.parent().append(img);
+
+              if (callback) {
+                eval(callback + '()');
+              }
+            }
+          }
+        });
+
+    
+          
+
+        //添加用户
+        $('#add-user').click(function () {
+          var time = (new Date()).valueOf();
+          var html = $('<div class="add-user"><div class="a-u-pic"><div class="a-u-pic-show"><input type="file" accept="image/jpeg,image/x-png" /></div></div><div class="a-u-name"><p><span>用户名：</span><input class="a-u-data-name" type="text" value="" /></p><p><span>聊天内容：</span><textarea class="a-u-content' + time + '"></textarea><a class="a-u-face btn-add-face" data-input="a-u-content' + time + '" href="#">表情</a></p><p><span>红包祝福语：</span><input class="a-u-data-redpacket" type="text" value="恭喜发财，大吉大利！"></p><p><span>转账/收钱金额：</span><input class="a-u-data-pay" type="text" value="" /></p><p><span>语音时间：</span><input class="a-u-data-voice" type="text" value="" /></p><p><input style="margin-right:5px;" class="btn-rand-username" type="button" value="随机用户名" /><input class="btn-rand-face" type="button" value="随机头像" /></p><p><div class="a-u-pic-pic"><div class="a-u-pic-show-pic"><input type="file" class="a-u-data-pic" accept="image/jpeg,image/x-png"></div></div></p></div><div class="a-u-dialog" style="clear:both;"><a class="btn btn-primary" data-type="left" href="#">添加文字对话</a></div><div class="a-u-dialog-pic"><a class="btn btn-warning" data-type="left" href="#">添加图片对话</a></div><div class="a-u-dialog-voice"><a class="btn btn-primary" data-type="left" href="#">添加语音对话</a></div><div class="a-u-dialog-sedpacket"><a class="btn btn-danger" data-type="left" href="#">添加发红包对话</a></div><div class="a-u-dialog-redpacket"><a class="btn btn-danger" data-type="left" href="#">添加收红包对话</a></div><div class="a-u-dialog-pay"><a class="btn btn-primary" data-dir="send" data-type="left" href="#">添加转账对话</a></div><div class="a-u-dialog-pay"><a class="btn btn-primary" data-dir="rec" data-type="left" href="#">添加收钱对话</a></div><div class="a-u-dialog-master"><a class="btn btn-primary" href="#">设为主人</a></div><div class="a-u-dialog-del"><a class="btn btn-danger" href="#">删除用户</a></div></div>');
+          $('.users').append(html);
+          html.find('.btn-rand-username').click();
+        });
+
+        //删除用户
+        $('body').on('click', '.a-u-dialog-del', function () {
+          if (confirm('您确认要删除？')) {
+            $(this).parents('.add-user').remove();
+          }
+          return false;
+        });
+
+        /*$('body').on('mouseover','.i-b-time,.i-b-rec-text,.i-b-sen-text',function(){
+        $(this).find('.msg-del').show();
+        });
+        $('body').on('mouseout','.i-b-time,.i-b-rec-text,.i-b-sen-text',function(){
+        $(this).find('.msg-del').hide();
+        });*/
+
+
+
+        $('body').on('click', '.msg-del', function () {
+          $(this).parents('.i-b-time,.i-b-rec-text,.i-b-sen-text').remove();
+        });
+
+        $('.clear-dialog').click(function () {
+          if (confirm('您确认要清除所有对话？')) {
+            $('.i-b-time,.i-b-rec-text,.i-b-sen-text').remove();
+          }
+        });
+
+
+        //主人切换
+        $('body').on('click', '.a-u-dialog-master a', function () {
+          var parent = $(this).parents('.users');
+          parent.find('.a-u-dialog-master a').removeClass('btn-success');
+          $(this).addClass('btn-success');
+          return false;
+        });
+
+        $('.body_bg_del').click(function () {
+          $('.i-body').css('background-image', 'none');
+          $('.a-u-pic-bodybg img').remove();
+          return false;
+        });
+
+        $('#add-user').click();
+
+        setTimeout(function () {
+          $('.btn-rand-face').click();
+          $('.btn-rand-username').click();
+
+          var _title = '';
+          $(".a-u-data-name").each(function () {
+            _title = $(this).val();
+          });
+
+          /*$('.input-common').val(_title);
+          $('.i-n-name span').text(_title);*/
+        }, 500);
+      </script>
+
+    </div>
+    <!-- /主体 -->
+  </div>
+
+  <!-- 底部 -->
+
+  <div class="pop-pic">
+    <img src="#" />
+    <div class="tips">
+      <p class="tips-mobile">手指按住上面的图片三秒钟保存到手机</p>
+      <p class="tips-pc">请将鼠标移动到上面图片上，然后点击鼠标右键，选择保持图片</p>
+      <a>继续制作</a>
+    </div>
+  </div>
+
+  <iframe id="ifm" frameborder="0" class="hide_ifm" src="/wx/blank_wxduihua.html"></iframe>
+
+  <script>
+    function makePic(obj) {
+      var _this = obj;
+      var div = $('#iphone').clone();
+
+      var my_image = $('.my-image');
+      var mask = $('.mask');
+      if (!my_image.length) {
+        my_image = $('<div class="my-image">成功生成图片，点击 <a class="my-image-view" target="_blank" href="#">这里</a> 查看，<a class="my-image-continue" href="#">继续制作</a></div>');
+        $('body').append(my_image);
+      }
+      if (!mask.length) {
+        $('body').append('<div class="mask"></div>');
+      }
+
+      div.removeClass('iphone-preview');
+      div.css({
+        zoom: 1,
+        position: 'absolute',
+        left: 0,
+        top: 0
+      });
+      $('#ifm').contents().find('body').append(div);
+      _this.hide();
+      $('.loading').show();
+      $('.my-image').hide();
+      $('.mask').hide();
+
+
+      html2canvas(div, {
+        onrendered: function (canvas) {
+          var myImage = canvas.toDataURL("image/png");
+
+          var pop_pic = $('.pop-pic');
+          var pop_class = 'pc';
+          if (browser.versions.mobile) {
+            pop_class = 'mobile';
+          }
+          pop_pic.find('.tips').addClass(pop_class);
+          pop_pic.find('img').attr('src', myImage);
+
+          try {
+            pop_pic.show();
+          } catch (error) {
+
+          }
+          $('#wrapper').hide();
+          $('.loading').hide();
+          _this.show();
+
+
+          div.remove();
+        }
+      });
+      return false;
+    }
+    $(function () {
+      $('.pop-pic .tips a').click(function () {
+        $('.pop-pic').hide();
+        $('#wrapper').show();
+      });
+
+      $('#save').click(function () {
+        start_make($(this));
+      });
+
+      /*背景选择ss*/
+      $(".btn-bgModal").click(function () {
+        var _arr = ['images/bg/12.jpeg', 'images/bg/13.jpeg', 'images/bg/11.jpeg', 'images/bg/10.jpeg', 'images/bg/9.jpeg', 'images/bg/8.jpeg', 'images/bg/7.jpeg', 'images/bg/6.jpeg', 'images/bg/5.jpeg', 'images/bg/4.jpeg', 'images/bg/2.jpeg', 'images/bg/3.jpeg', 'images/bg/1.png', 'images/bg/1.jpeg'];
+        var _html = '<ul>';
+        for (var i in _arr) {
+          _html += '<li><a href="javascript:void(0);"><img src="picture/56b76067c0444761b633389802e7c352.gif' + _arr[i] + '" ></a></li>';
+        }
+        _html += '</ul>';
+        //选择背景
+        _html = $(_html)
+        _html.find('img').click(function () {
+          var src = $(this).attr('src');
+          $('.a-u-pic-bodybg img').attr("src", src);
+          $('.i-body').css('background-image', 'url('images / 4f3daeac1d0d495191cbecdc3ca9b5b2.gif')');
+
+        });
+        $("#bglist").html(_html);
+      });
+
+    });
+  </script>
+
+
+  <script type="text/javascript">
+    (function () {
+      var ThinkPHP = window.Think = {
+        "ROOT": "", //当前网站地址
+        "APP": "", //当前项目地址
+        "PUBLIC": "/Public", //项目公共目录地址
+        "DEEP": "/", //PATHINFO分割符
+        "MODEL": ["2", "", "html"],
+        "VAR": ["m", "c", "a"]
+      }
+    })();
+  </script>
+  <div style="display: none">
+    <script>
+      var _hmt = _hmt || [];
+      (function () {
+        var hm = document.createElement("script");
+        hm.src = "https://hm.baidu.com/hm.js?010af47f72a51e97131f1828d7caabb8";
+        var s = document.getElementsByTagName("script")[0];
+        s.parentNode.insertBefore(hm, s);
+      })();
+    </script>
+  </div>
+</body>
+
+</html>
