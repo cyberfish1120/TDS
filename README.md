@@ -14,12 +14,12 @@ https://drive.google.com/drive/folders/1xaW472DaLdA7OjwXQzUnm0qs-M9FEqo-?usp=sha
 （网页部署环境要求：``pip3 install flask flask-cors``）
 
 #### 预训练权重下载地址
-- 百度网盘链接：https://pan.baidu.com/s/1zqM70hUM8TaLDW0q0-pZ9w 
-- 提取码：57sp
+- 百度网盘链接：https://pan.baidu.com/s/17fCpfkQodHvQEOLinrkG-Q
+- 提取码：hg3r
 
 - 备用权重
-  - 百度网盘：https://pan.baidu.com/s/17fCpfkQodHvQEOLinrkG-Q
-  - 提取码：hg3r  
+  - 百度网盘：https://pan.baidu.com/s/1zqM70hUM8TaLDW0q0-pZ9w
+  - 提取码：57sp  
 
 下载好放在根目录下即可
 
