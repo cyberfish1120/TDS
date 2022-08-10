@@ -1,4 +1,4 @@
-# Paddle_TDS
+# TDS
 
 ## 运行方式一：Colab（优点：环境部署简单快速，缺点：无法进行网页端查看,得翻墙）
 #### Covlab地址
@@ -8,8 +8,6 @@ https://drive.google.com/drive/folders/1xaW472DaLdA7OjwXQzUnm0qs-M9FEqo-?usp=sha
 ## 运行方式二：本地运行
 #### 环境要求
 - python=3.6  
-- paddlepaddle-gpu=2.1.1.post101  
-- paddlenlp
 
 （网页部署环境要求：``pip3 install flask flask-cors``）
 
